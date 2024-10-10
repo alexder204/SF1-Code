@@ -14,12 +14,19 @@ ranks = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
 suits = ("hearts", "diamonds", "clubs", "spades")
 
 # Create a deck of cards
-deck = ...
+deck = [(rank, suit) for rank in ranks for suit in suits]
+print(deck)
 
 # Shuffle the deck 
-
+shuffleDeck = input("Shuffling deck...")
+def deck_shuffle(deck):
+    random.shuffle(deck)
 
 # Split the deck into two hands
+splitDeck = input("Splitting deck...")
+def split_deck(deck):
+    mid = len(deck) // 2
+    return deck[:mid], deck[mid:]
 
 def card_comparison(p1_card, p2_card):
     """This is the logic that compares two cards to find the stronger card
