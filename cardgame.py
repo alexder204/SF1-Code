@@ -106,6 +106,7 @@ def war(player1_hand, player2_hand):
             print("Another tie! Peace rages on...")
             print(f"Player 1 score: {len(pile1)}.")
             print(f"Player 2 score: {len(pile2)}.")
+            war_pile.extend([p1_card, p2_card])
             war(player1_hand, player2_hand)
         if result == 1:
             print("Player 1 wins Peace!")
