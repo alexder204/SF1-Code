@@ -2,8 +2,9 @@
 input("Hello Player!")
 input("Welcome to the game of Peace!")
 input("If you never played this game before, here are the rules.")
-input("Peace is a simple card game where the objective is to win all the cards. The player must flip over the top card of their decks after the computer has done so, and the one with the higher card takes both cards. If there's a tie, a peaceful exchange occurs, where the computer and the player need to place 3 cards face down and then place the 4th card face-up. The card with the higher rank will win all the cards on the board. The game continues until either you or the computer collect all the cards. Click enter to proceed when you're ready.")
+input("Peace is a simple card game where the objective is to win all the cards. Each player must flip over the top card of their decks, and the one with the higher card takes both cards. If there's a tie, a peaceful exchange occurs, where both players need to place 3 cards face down and then place the 4th card face-up. The player with the higher ranked card will win all the cards on the board. The game continues until either of the players collect all the cards. Click enter to proceed when you're ready.")
 input("This game is auto-generated, so all you need to do is click enter when prompted to!")
+input("Just pick a player you want to win and let the computer do the rest.")
 input("Let's start!")
 
 # Import necessary modules
@@ -76,11 +77,9 @@ def play_round(player1_hand, player2_hand):
     
     if len(player1_hand) == 0 or len(player2_hand) == 0:
         print("A player is out of cards. Starting next round...")
-        print(f"Player 1 has {len(player1_hand)} cards before stitch.")
-        print(f"Player 2 has {len(player2_hand)} cards before stitch.")
         player1_hand.extend(pile1)
-        pile1.clear()
         player2_hand.extend(pile2)
+        pile1.clear()
         pile2.clear()
         print(f"Player 1 has: {len(player1_hand)} cards.")
         print(f"Player 2 has: {len(player2_hand)} cards.")
@@ -96,7 +95,7 @@ def war(player1_hand, player2_hand):
 
         war_pile.extend(p1_war_cards)
         war_pile.extend(p2_war_cards)
-        print(f"Peace pile value: {len(war_pile)}.")
+        print(f"Peace pile value: {len(war_pile)} cards.")
 
         p1_card = player1_hand.pop(0)
         p2_card = player2_hand.pop(0)
@@ -123,13 +122,13 @@ def war(player1_hand, player2_hand):
 
     if len(player1_hand) < 4 or len(player2_hand) < 4:
         print("A player does not have enough cards for Peace. Starting the next round...")
-        player2_hand.extend(pile2)
-        player2_hand.extend(war_pile[:mid])
-        pile2.clear()
         player1_hand.extend(pile1)
         player1_hand.extend(war_pile[mid:])
+        player2_hand.extend(pile2)
+        player2_hand.extend(war_pile[:mid])
         war_pile.clear()
         pile1.clear()
+        pile2.clear()
         print(f"Player 1 has: {len(player1_hand)} cards.")
         print(f"Player 2 has: {len(player2_hand)} cards.")
         print("Current pile counts reset to 0.")
@@ -138,12 +137,15 @@ def play_game():
     # Main function to run the game.
     global player1_hand, player2_hand, pile1, pile2
     while len(player1_hand) > 0 and len(player2_hand) > 0:
+        # Re-shuffle the decks to avoid both players getting the same number of cards after every round.
+        random.shuffle(player1_hand)
+        random.shuffle(player2_hand)
         play_round(player1_hand, player2_hand)
 
-    if len(player2_hand) == 52:
-        print("Player 1 has no more cards, Player 2 wins the game!")
     if len(player1_hand) == 52:
         print("Player 2 has no more cards, Player 1 wins the game!")
+    if len(player2_hand) == 52:
+        print("Player 1 has no more cards, Player 2 wins the game!")
 
 # Call the main function to start the game
 play_game()
